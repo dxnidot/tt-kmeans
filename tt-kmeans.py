@@ -87,6 +87,6 @@ if __name__ == "__main__":
     
     print(f"\nTexto analizado: {texto}")
     print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
-    print("\nPorcentajes usando Euclidiana:")
+    print("\nPorcentajes:")
     for s, p in porcentajeEuc.items():
         print(f"{s}: {p:.2f}%")
