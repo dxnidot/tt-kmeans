@@ -1,0 +1,117 @@
+Palabra,PFA,Categoria
+ Abundancia,0.423,Alegría
+Acogedor  ,0.3838,Alegría
+Amabilidad,0.5226,Alegría
+Afecto ,0.6358,Alegría
+Animado,0.7428,Alegría
+Armonía,0.476,Alegría
+Bienestar,0.5158,Alegría
+Carcajada ,0.7898,Alegría
+Divertido,0.851,Alegría
+Felicidad,0.9256,Alegría
+Gratitud,0.6032,Alegría
+ Impresionante,0.5096,Alegría
+Inspirador,0.5026,Alegría
+Motivación,0.5228,Alegría
+Optimismo ,0.6762,Alegría
+Paz,0.3768,Alegría
+Plenitud,0.47,Alegría
+ Prosperidad,0.5292,Alegría
+ Satisfacción ,0.6358,Alegría
+Serenidad,0.4564,Alegría
+ Abominable,0.4234,Enojo
+Adversidad,0.3966,Enojo
+Agresivo,0.7898,Enojo
+Amarga,0.5026,Enojo
+ Antagonismo ,0.4296,Enojo
+Cólera,0.797,Enojo
+Desprecio  ,0.6366,Enojo
+Disgusto,0.4962,Enojo
+Envidia,0.71,Enojo
+Furia,0.8582,Enojo
+ Indignación ,0.45,Enojo
+Odio,0.7904,Enojo
+ Resentimiento,0.636,Enojo
+Rencor,0.7028,Enojo
+Rivalidad,0.4954,Enojo
+Saña,0.7706,Enojo
+Venganza,0.6566,Enojo
+Violento,0.7234,Enojo
+Ira,0.8578,Enojo
+Alarma,0.3896,Miedo
+Angustia ,0.5088,Miedo
+Aprensión ,0.3834,Miedo
+Asustadizo,0.7098,Miedo
+Aterrador,0.7306,Miedo
+Cobarde,0.7504,Miedo
+Inseguridad,0.463,Miedo
+Pavor,0.7572,Miedo
+Temor,0.8376,Miedo
+Terror ,0.8712,Miedo
+Timidez,0.7034,Miedo
+Tragedia,0.576,Miedo
+Amenaza,0.576,Miedo
+Horror,0.7902,Miedo
+ Incertidumbre,0.4828,Miedo
+Nervios,0.4034,Miedo
+Pánico,0.6832,Miedo
+Reticencia ,0.4362,Miedo
+Sobresalto,0.3764,Miedo
+Timorato ,0.4494,Miedo
+Abominable,0.2186,Repulsión
+Asco,0.8178,Repulsión
+ Desagradable,0.743,Repulsión
+Inmundicia,0.3108,Repulsión
+ Repugnante,0.6962,Repulsión
+Vómito,0.4838,Repulsión
+Pestilente,0.61,Repulsión
+Rencoroso,0.245,Repulsión
+Basura,0.2844,Repulsión
+Podrido,0.5562,Repulsión
+Repeler,0.4236,Repulsión
+Maloliente,0.6896,Repulsión
+Fétido,0.7776,Repulsión
+Detestable,0.7036,Repulsión
+Desagrado,0.7438,Repulsión
+ Nauseabundo,0.6432,Repulsión
+Hediondo,0.8922,Repulsión
+Repulsivo,0.7242,Repulsión
+Asombro,0.919,Sorpresa
+Inesperado,0.7374,Sorpresa
+Admirable,0.3238,Sorpresa
+Anonadado,0.7632,Sorpresa
+Asombroso,0.8308,Sorpresa
+Impactante,0.777,Sorpresa
+Increíble,0.7708,Sorpresa
+Insólito,0.6298,Sorpresa
+ Sorprendente,0.9118,Sorpresa
+Maravillado,0.6702,Sorpresa
+Perplejo,0.804,Sorpresa
+Misterio,0.3502,Sorpresa
+ Incertidumbre,0.4566,Sorpresa
+ Desconcierto,0.4166,Sorpresa
+Pasmo,0.51,Sorpresa
+Novedad,0.4634,Sorpresa
+Atónito,0.7504,Sorpresa
+ Estupefacción,0.5832,Sorpresa
+ Fascinación,0.5964,Sorpresa
+Abatido,0.6636,Tristeza
+Desilusión ,0.6166,Tristeza
+Dolor ,0.4506,Tristeza
+Nostalgia,0.5236,Tristeza
+Melancolía ,0.6768,Tristeza
+Pesar ,0.5768,Tristeza
+Pérdida ,0.6374,Tristeza
+ Resignación,0.523,Tristeza
+Sollozo,0.6696,Tristeza
+Pena,0.7308,Tristeza
+Decepción,0.6566,Tristeza
+Aflicción,0.597,Tristeza
+Miseria,0.53,Tristeza
+Sufrimiento,0.7642,Tristeza
+ Desesperanza ,0.5764,Tristeza
+ Duelo ,0.3784,Tristeza
+Soledad ,0.4304,Tristeza
+Tristeza,0.9396,Tristeza
+ Desconsuelo,0.6564,Tristeza
+ Compasión ,0.5766,Tristeza
