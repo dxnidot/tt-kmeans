@@ -24,7 +24,7 @@ def centroidesCSV(archivo_csv):
 
 def tokenizar(texto):
     stopwords = {"de", "el", "la", "y", "en", "a", "los", "las", "por", "con", "del", "al", "que", "un", "una", "este", "esta", "es", "muy"}
-    texto = texto.translate(str.maketrans("", "", ".,:;!?\"'()[]{}"))
+    texto = texto.translate(str.maketrans("", "", ".,:;¡¿!?\"'()[]{}"))
     palabras = texto.lower().split()
     palabrasFiltradas = [normalizar(palabra) for palabra in palabras if palabra not in stopwords]
     return palabrasFiltradas
@@ -77,7 +77,7 @@ def analizarSentimiento(texto, centroides):
 
 # Programa principal
 if __name__ == "__main__":
-    archivo_csv = "SEI_LEXICON_TT_033.csv"  
+    archivo_csv = "SEL.csv"  
     texto = input("Escribe una frase para analizar su sentimiento: ") 
     # Cargar los centroides desde el archivo CSV
     centroides = centroidesCSV(archivo_csv)
@@ -85,8 +85,8 @@ if __name__ == "__main__":
     # Analizar el sentimiento del texto
     sentimientoEuc, porcentajeEuc = analizarSentimiento(texto, centroides)
     
-    # print(f"\nTexto analizado: {texto}")
-    # print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
-    # print("\nPorcentajes:")
+    print(f"\nTexto analizado: {texto}")
+    print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
+    print("\nPorcentajes:")
     for s, p in porcentajeEuc.items():
         print(f"{s}: {p:.2f}%")
