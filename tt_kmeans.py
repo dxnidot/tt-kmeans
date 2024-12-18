@@ -43,7 +43,7 @@ def textoVector(texto, centroides):
 # Determinar el sentimiento dominante y devolver porcentajes
 def analizarSentimiento(texto, centroides):
     vectorTexto = textoVector(texto, centroides)
-    print("\nVector del texto:", vectorTexto)
+    # print("\nVector del texto:", vectorTexto)
 
     # Convertimos cada sentimiento en su vector correspondiente
     vectoresSentimientos = {
@@ -85,8 +85,8 @@ if __name__ == "__main__":
     # Analizar el sentimiento del texto
     sentimientoEuc, porcentajeEuc = analizarSentimiento(texto, centroides)
     
-    print(f"\nTexto analizado: {texto}")
-    print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
-    print("\nPorcentajes:")
+    # print(f"\nTexto analizado: {texto}")
+    # print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
+    # print("\nPorcentajes:")
     for s, p in porcentajeEuc.items():
         print(f"{s}: {p:.2f}%")
