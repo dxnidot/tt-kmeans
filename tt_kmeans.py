@@ -55,11 +55,11 @@ def analizarSentimiento(texto, centroides):
         sentimiento: distanciaEuclidiana(vectorTexto, vector)
         for sentimiento, vector in vectoresSentimientos.items()
     }
-    print("\nDistancias euclidianas:", distancias)
+    # print("\nDistancias euclidianas:", distancias)
 
     maxDistancia = max(distancias.values())
     similitudesEuclidiana = {sentimiento: maxDistancia - distancia for sentimiento, distancia in distancias.items()}
-    print("Similitudes euclidianas invertidas:", similitudesEuclidiana)
+    # print("Similitudes euclidianas invertidas:", similitudesEuclidiana)
 
     # Convertir similitudes euclidianas a porcentajes
     totalSimilitudesEuclidiana = sum(similitudesEuclidiana.values())
