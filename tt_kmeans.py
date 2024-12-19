@@ -2,6 +2,7 @@ import math
 import csv
 import unicodedata
 
+# Normalizar palabras (quitar acentos y convertir a minúsculas)
 def normalizar(palabra):
     return ''.join(c for c in unicodedata.normalize('NFD', palabra) if unicodedata.category(c) != 'Mn').lower().strip()
 
@@ -9,6 +10,7 @@ def normalizar(palabra):
 def distanciaEuclidiana(vectorTexto, vector):
     return math.sqrt(sum((x - y) ** 2 for x, y in zip(vectorTexto, vector)))
 
+# Cargar centroides desde el archivo CSV
 def centroidesCSV(archivo_csv):
     centroides = {}
     with open(archivo_csv, mode='r', encoding='utf-8') as file:
@@ -22,6 +24,7 @@ def centroidesCSV(archivo_csv):
             centroides[sentimiento][palabra] = peso
     return centroides
 
+# Eliminar stopwords y tokenizar
 def tokenizar(texto):
     stopwords = {"de", "el", "la", "y", "en", "a", "los", "las", "por", "con", "del", "al", "que", "un", "una", "este", "esta", "es", "muy"}
     texto = texto.translate(str.maketrans("", "", ".,:;¡¿!?\"'()[]{}"))
@@ -29,64 +32,68 @@ def tokenizar(texto):
     palabrasFiltradas = [normalizar(palabra) for palabra in palabras if palabra not in stopwords]
     return palabrasFiltradas
 
-# Convertir un texto a un vector basado en los centroides
-def textoVector(texto, centroides):
+# Convertir un texto a vector y obtener detalles de las palabras
+def textoVectorDetalles(texto, centroides):
     palabras = tokenizar(texto)
-    vocabulario = set(palabra for c in centroides.values() for palabra in c)
+    vocabulario = list(set(palabra for c in centroides.values() for palabra in c))
     vector = []
+    detalles = []
+
     for palabra in vocabulario:
         peso = sum(centroides[sentimiento].get(palabra, 0) for sentimiento in centroides)
         frecuencia = palabras.count(palabra)
-        vector.append(frecuencia * peso)
-    return vector
+        contribucion = frecuencia * peso
+        vector.append(contribucion)
+        
+        if contribucion > 0:
+            detalles.append({
+                "palabra": palabra,
+                "frecuencia": frecuencia,
+                "peso": peso,
+                "contribucion": contribucion,
+                "sentimientos": [sent for sent, centroide in centroides.items() if palabra in centroide]
+            })
 
-# Determinar el sentimiento dominante y devolver porcentajes
+    return vector, detalles
+
+# Analizar el sentimiento del texto
 def analizarSentimiento(texto, centroides):
-    vectorTexto = textoVector(texto, centroides)
-    # print("\nVector del texto:", vectorTexto)
+    _, detalles = textoVectorDetalles(texto, centroides)
 
-    # Convertimos cada sentimiento en su vector correspondiente
-    vectoresSentimientos = {
-        sentimiento: textoVector(" ".join(centroide.keys()), centroides)
-        for sentimiento, centroide in centroides.items()
-    }
-    # distancia euclidiana entre el texto y cada sentimiento
-    distancias = {
-        sentimiento: distanciaEuclidiana(vectorTexto, vector)
-        for sentimiento, vector in vectoresSentimientos.items()
-    }
-    # print("\nDistancias euclidianas:", distancias)
+    # Calcular contribuciones acumuladas por sentimiento
+    contribucionesPorSentimiento = {sentimiento: 0 for sentimiento in centroides}
+    for d in detalles:
+        for sentimiento in d["sentimientos"]:
+            contribucionesPorSentimiento[sentimiento] += d["contribucion"]
 
-    maxDistancia = max(distancias.values())
-    similitudesEuclidiana = {sentimiento: maxDistancia - distancia for sentimiento, distancia in distancias.items()}
-    # print("Similitudes euclidianas invertidas:", similitudesEuclidiana)
+    # Normalizar las contribuciones a porcentajes
+    totalContribuciones = sum(contribucionesPorSentimiento.values())
+    porcentaje = {sentimiento: (contrib / totalContribuciones) * 100 if totalContribuciones > 0 else 0.0
+                  for sentimiento, contrib in contribucionesPorSentimiento.items()}
 
-    # Convertir similitudes euclidianas a porcentajes
-    totalSimilitudesEuclidiana = sum(similitudesEuclidiana.values())
-    if totalSimilitudesEuclidiana == 0:
-        print("\nNo se encontraron palabras relevantes en el texto.")
-        porcentajeEuclidiana = {sentimiento: 0.0 for sentimiento in centroides.keys()}
-    else:
-        porcentajeEuclidiana = {sentimiento: (similitud / totalSimilitudesEuclidiana) * 100
-                                for sentimiento, similitud in similitudesEuclidiana.items()}
+    # Determinar el sentimiento dominante
+    sentimientoDominante = max(porcentaje, key=porcentaje.get)
+    return sentimientoDominante, porcentaje, detalles
 
-    # Encontrar el sentimiento dominante
-    sentimientoDominanteEuclidiana = max(porcentajeEuclidiana, key=porcentajeEuclidiana.get)
-
-    return sentimientoDominanteEuclidiana, porcentajeEuclidiana
 
 # Programa principal
 if __name__ == "__main__":
-    archivo_csv = "SEL.csv"  
-    texto = input("Escribe una frase para analizar su sentimiento: ") 
+    archivo_csv = "SEL.csv" 
+    texto = input("Escribe una frase para analizar su sentimiento: ")
+
     # Cargar los centroides desde el archivo CSV
     centroides = centroidesCSV(archivo_csv)
-    
+
     # Analizar el sentimiento del texto
-    sentimientoEuc, porcentajeEuc = analizarSentimiento(texto, centroides)
-    
+    sentimientoDominante, porcentaje, detalles = analizarSentimiento(texto, centroides)
+
     print(f"\nTexto analizado: {texto}")
-    print(f"\nSentimiento dominante (Euclidiana): {sentimientoEuc}")
-    print("\nPorcentajes:")
-    for s, p in porcentajeEuc.items():
+    print(f"Sentimiento dominante: {sentimientoDominante}")
+    print("\nPorcentajes de sentimientos:")
+    for s, p in porcentaje.items():
         print(f"{s}: {p:.2f}%")
+
+    print("\nDetalles de las palabras que contribuyeron:")
+    for d in detalles:
+        print(f"Palabra: {d['palabra']}, Frecuencia: {d['frecuencia']}, Peso: {d['peso']:.3f}, "
+              f"Contribución: {d['contribucion']:.3f}, Sentimientos: {', '.join(d['sentimientos'])}")
