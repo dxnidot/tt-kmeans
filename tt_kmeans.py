@@ -33,7 +33,7 @@ def tokenizar(texto):
     return palabrasFiltradas
 
 # Convertir un texto a vector y obtener detalles de las palabras
-def textoVectorDetalles(texto, centroides):
+def textoVector(texto, centroides):
     palabras = tokenizar(texto)
     vocabulario = list(set(palabra for c in centroides.values() for palabra in c))
     vector = []
@@ -58,7 +58,7 @@ def textoVectorDetalles(texto, centroides):
 
 # Analizar el sentimiento del texto
 def analizarSentimiento(texto, centroides):
-    _, detalles = textoVectorDetalles(texto, centroides)
+    _, detalles = textoVector(texto, centroides)
 
     # Calcular contribuciones acumuladas por sentimiento
     contribucionesPorSentimiento = {sentimiento: 0 for sentimiento in centroides}
@@ -78,7 +78,7 @@ def analizarSentimiento(texto, centroides):
 
 # Programa principal
 if __name__ == "__main__":
-    archivo_csv = "SEL.csv" 
+    archivo_csv = "SEL_CIC.csv" 
     texto = input("Escribe una frase para analizar su sentimiento: ")
 
     # Cargar los centroides desde el archivo CSV
@@ -93,7 +93,7 @@ if __name__ == "__main__":
     for s, p in porcentaje.items():
         print(f"{s}: {p:.2f}%")
 
-    print("\nDetalles de las palabras que contribuyeron:")
-    for d in detalles:
-        print(f"Palabra: {d['palabra']}, Frecuencia: {d['frecuencia']}, Peso: {d['peso']:.3f}, "
-              f"Contribución: {d['contribucion']:.3f}, Sentimientos: {', '.join(d['sentimientos'])}")
+    # print("\nDetalles de las palabras que contribuyeron:")
+    # for d in detalles:
+    #     print(f"Palabra: {d['palabra']}, Frecuencia: {d['frecuencia']}, Peso: {d['peso']:.3f}, "
+    #           f"Contribución: {d['contribucion']:.3f}, Sentimientos: {', '.join(d['sentimientos'])}")

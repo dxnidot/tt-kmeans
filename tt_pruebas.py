@@ -8,8 +8,8 @@ def normalizar_etiqueta(texto):
     return ''.join(c for c in unicodedata.normalize('NFD', texto) if unicodedata.category(c) != 'Mn')
 
 # Archivos de entrada
-archivo_lexicon = "SEL.csv"
-archivo_pruebas = "pruebas.csv"
+archivo_lexicon = "SEL_CIC.csv"
+archivo_pruebas = "pruebas_2000.csv"
 
 # Cargar centroides desde el archivo léxico
 centroides = tt_kmeans.centroidesCSV(archivo_lexicon)
@@ -76,9 +76,3 @@ for i, fila in enumerate(matriz_confusion):
 print("\nExactitud del modelo: {:.2f}%".format(exactitud * 100))
 print("Frases con palabras del léxico:", len(y_true) - len(otros))
 print("Frases sin palabras en el léxico:", len(otros))
-
-# Mostrar frases sin palabras relevantes
-if otros:
-    print("\nFrases sin palabras en el léxico:")
-    for frase in otros:
-        print(f" - {frase}")
