@@ -8,7 +8,7 @@ def normalizar_etiqueta(texto):
     return ''.join(c for c in unicodedata.normalize('NFD', texto) if unicodedata.category(c) != 'Mn')
 
 # Archivos de entrada
-archivo_lexicon = "SEL_CIC.csv"
+archivo_lexicon = "SEL_TT.csv"
 archivo_pruebas = "pruebas_2000.csv"
 
 # Cargar centroides desde el archivo léxico
@@ -29,7 +29,7 @@ with open(archivo_pruebas, mode='r', encoding='utf-8') as f:
         sentimiento_real = normalizar_etiqueta(row['sentimiento'])
 
         # Analizar el sentimiento usando TT_KMEANS
-        sentimiento_predicho, _, detalles = tt_kmeans.analizarSentimiento(frase, centroides)
+        sentimiento_predicho, _ = tt_kmeans.analizarSentimiento(frase, centroides)
         sentimiento_predicho = normalizar_etiqueta(sentimiento_predicho)
 
         # Verificar si la frase tiene palabras en el léxico

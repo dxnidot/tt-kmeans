@@ -32,39 +32,31 @@ def tokenizar(texto):
     palabrasFiltradas = [normalizar(palabra) for palabra in palabras if palabra not in stopwords]
     return palabrasFiltradas
 
-# Convertir un texto a vector y obtener detalles de las palabras
+# Convertir un texto a vector
 def textoVector(texto, centroides):
     palabras = tokenizar(texto)
     vocabulario = list(set(palabra for c in centroides.values() for palabra in c))
     vector = []
-    detalles = []
 
     for palabra in vocabulario:
         peso = sum(centroides[sentimiento].get(palabra, 0) for sentimiento in centroides)
         frecuencia = palabras.count(palabra)
         contribucion = frecuencia * peso
         vector.append(contribucion)
-        
-        if contribucion > 0:
-            detalles.append({
-                "palabra": palabra,
-                "frecuencia": frecuencia,
-                "peso": peso,
-                "contribucion": contribucion,
-                "sentimientos": [sent for sent, centroide in centroides.items() if palabra in centroide]
-            })
 
-    return vector, detalles
+    return vector
+
 
 # Analizar el sentimiento del texto
 def analizarSentimiento(texto, centroides):
-    _, detalles = textoVector(texto, centroides)
-
     # Calcular contribuciones acumuladas por sentimiento
     contribucionesPorSentimiento = {sentimiento: 0 for sentimiento in centroides}
-    for d in detalles:
-        for sentimiento in d["sentimientos"]:
-            contribucionesPorSentimiento[sentimiento] += d["contribucion"]
+
+    # Calcular contribuciones directamente desde el vector
+    for i, palabra in enumerate(tokenizar(texto)):
+        for sentimiento in centroides:
+            contribucion = centroides[sentimiento].get(palabra, 0)
+            contribucionesPorSentimiento[sentimiento] += contribucion
 
     # Normalizar las contribuciones a porcentajes
     totalContribuciones = sum(contribucionesPorSentimiento.values())
@@ -73,27 +65,21 @@ def analizarSentimiento(texto, centroides):
 
     # Determinar el sentimiento dominante
     sentimientoDominante = max(porcentaje, key=porcentaje.get)
-    return sentimientoDominante, porcentaje, detalles
-
+    return sentimientoDominante, porcentaje
 
 # Programa principal
 if __name__ == "__main__":
-    archivo_csv = "SEL_CIC.csv" 
+    archivo_csv = "SEL_TT.csv" 
     texto = input("Escribe una frase para analizar su sentimiento: ")
 
     # Cargar los centroides desde el archivo CSV
     centroides = centroidesCSV(archivo_csv)
 
     # Analizar el sentimiento del texto
-    sentimientoDominante, porcentaje, detalles = analizarSentimiento(texto, centroides)
+    sentimientoDominante, porcentaje = analizarSentimiento(texto, centroides)
 
     print(f"\nTexto analizado: {texto}")
     print(f"Sentimiento dominante: {sentimientoDominante}")
     print("\nPorcentajes de sentimientos:")
     for s, p in porcentaje.items():
         print(f"{s}: {p:.2f}%")
-
-    # print("\nDetalles de las palabras que contribuyeron:")
-    # for d in detalles:
-    #     print(f"Palabra: {d['palabra']}, Frecuencia: {d['frecuencia']}, Peso: {d['peso']:.3f}, "
-    #           f"Contribución: {d['contribucion']:.3f}, Sentimientos: {', '.join(d['sentimientos'])}")
